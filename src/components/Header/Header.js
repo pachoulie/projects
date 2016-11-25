@@ -12,6 +12,10 @@ export const Header = () => (
     <Link to='/counter' activeClassName='route--active'>
       Counter
     </Link>
+    {' · '}
+    <Link to='/todo-list' activeClassName='route--active'>
+      Todo-list
+    </Link>
   </div>
 );
 
