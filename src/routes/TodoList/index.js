@@ -1,4 +1,6 @@
-export default () => ({
+import { injectReducer } from '../../store/reducers';
+
+export default (store) => ({
   path: 'todo-list',
   /*  Async getComponent is only invoked when route matches   */
   getComponent (nextState, cb) {
@@ -8,7 +10,12 @@ export default () => ({
       /*  Webpack - use require callback to define
        dependencies for bundling   */
       const TodoList = require('./components/TodoList').default;
+      const reducer = require('./modules/todolist').default;
 
+      /*  Add the reducer to the store on key 'todolist'  */
+      injectReducer(store, { key: 'todolist', reducer });
+
+      /*  Return getComponent   */
       cb(null, TodoList);
     }, 'todo-list');
   }
