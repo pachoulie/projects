@@ -54,6 +54,9 @@ const karmaConfig = {
   },
   coverageReporter : {
     reporters : config.coverage_reporters
+  },
+  mochaReporter: {
+    showDiff: true
   }
 };
 

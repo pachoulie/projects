@@ -1,4 +1,4 @@
-import { Map } from 'immutable';
+import { List, Map } from 'immutable';
 
 // ------------------------------------
 // Action types
@@ -6,6 +6,12 @@ import { Map } from 'immutable';
 export const ADD_TODO = 'ADD_TODO';
 export const TOGGLE_TODO = 'TOGGLE_TODO';
 export const SET_VISIBILITY_FILTER = 'SET_VISIBILITY_FILTER';
+
+export const actionTypes = {
+  ADD_TODO,
+  TOGGLE_TODO,
+  SET_VISIBILITY_FILTER
+};
 
 // ------------------------------------
 // Other constants
@@ -22,7 +28,7 @@ export const VisibilityFilters = {
 export function addTodo(text) {
   return {
     type: ADD_TODO,
-    text
+    payload: text
   }
 }
 export function toggleTodo(index) {
@@ -52,15 +58,10 @@ const ACTION_HANDLERS = {
     state.set('visibilityFilter', action.payload),
 
   [ADD_TODO]: (state, action) =>
-    state.set('todos', state.todos.push({text: action.payload, completed: false})),
+      state.updateIn(['todos'], (todos) => todos.push(Map({text: action.payload, completed: false}))),
 
   [TOGGLE_TODO]: (state, action) =>
-    state.todos.map((todo) => {
-      if (index === action.payload) {
-        todo.set('completed', !todo.completed)
-      }
-      return todo;
-    })
+    state.updateIn(['todos', action.payload, 'completed'], (completed) => !completed)
 };
 
 // ------------------------------------
@@ -68,7 +69,7 @@ const ACTION_HANDLERS = {
 // ------------------------------------
 const initialState = Map({
   visibilityFilter: VisibilityFilters.SHOW_ALL,
-  todos: []
+  todos: List()
 });
 
 export default function todoListReducer(state = initialState, action) {

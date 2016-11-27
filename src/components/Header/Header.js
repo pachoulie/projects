@@ -13,7 +13,7 @@ export const Header = () => (
       Counter
     </Link>
     {' · '}
-    <Link to='/todo-list' activeClassName='route--active'>
+    <Link to='/todolist' activeClassName='route--active'>
       Todo-list
     </Link>
   </div>
