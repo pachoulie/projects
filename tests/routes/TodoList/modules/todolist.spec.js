@@ -60,7 +60,7 @@ describe('(Redux Module) Todo List', () => {
         });
     });
 
-    describe('(Action Creator) add todo', () => {
+    describe('(Action Creator) addTodo', () => {
         it('Should be exported as a function.', () => {
             expect(actions.addTodo).to.be.a('function');
         });
@@ -74,7 +74,7 @@ describe('(Redux Module) Todo List', () => {
         });
     });
 
-    describe('(Action Creator) toggle todo', () => {
+    describe('(Action Creator) toggleTodo', () => {
         it('Should be exported as a function.', () => {
             expect(actions.toggleTodo).to.be.a('function');
         });
@@ -88,7 +88,7 @@ describe('(Redux Module) Todo List', () => {
         });
     });
 
-    describe('(Action Creator) set visibility filter', () => {
+    describe('(Action Creator) setVisibilityFilter', () => {
         it('Should be exported as a function.', () => {
             expect(actions.setVisibilityFilter).to.be.a('function');
         });
@@ -164,8 +164,8 @@ describe('(Redux Module) Todo List', () => {
             expect(state.get('visibilityFilter')).to.equal(VisibilityFilters.SHOW_ALL);
             state = todoListReducer(state, actions.setVisibilityFilter(VisibilityFilters.SHOW_COMPLETED));
             expect(state.get('visibilityFilter')).to.equal(VisibilityFilters.SHOW_COMPLETED);
-            state = todoListReducer(state, actions.setVisibilityFilter(VisibilityFilters.SHOW_DONE));
-            expect(state.get('visibilityFilter')).to.equal(VisibilityFilters.SHOW_DONE);
+            state = todoListReducer(state, actions.setVisibilityFilter(VisibilityFilters.SHOW_ACTIVE));
+            expect(state.get('visibilityFilter')).to.equal(VisibilityFilters.SHOW_ACTIVE);
             state = todoListReducer(state, actions.setVisibilityFilter(VisibilityFilters.SHOW_ALL));
             expect(state.get('visibilityFilter')).to.equal(VisibilityFilters.SHOW_ALL);
         });

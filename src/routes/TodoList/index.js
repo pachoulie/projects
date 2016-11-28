@@ -9,14 +9,14 @@ export default (store) => ({
     require.ensure([], (require) => {
       /*  Webpack - use require callback to define
        dependencies for bundling   */
-      const TodoList = require('./components/TodoList').default;
+      const App = require('./components/App').default;
       const reducer = require('./modules/todolist').default;
 
       /*  Add the reducer to the store on key 'todolist'  */
       injectReducer(store, { key: 'todolist', reducer });
 
       /*  Return getComponent   */
-      cb(null, TodoList);
+      cb(null, App);
     }, 'todolist');
   }
 });
