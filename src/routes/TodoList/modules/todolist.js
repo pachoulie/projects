@@ -5,12 +5,12 @@ import { List, Map } from 'immutable';
 // ------------------------------------
 export const ADD_TODO = 'ADD_TODO';
 export const TOGGLE_TODO = 'TOGGLE_TODO';
-export const SET_VISIBILITY_FILTER = 'SET_VISIBILITY_FILTER';
+export const SET_FILTER = 'SET_FILTER';
 
 export const actionTypes = {
   ADD_TODO,
   TOGGLE_TODO,
-  SET_VISIBILITY_FILTER
+  SET_FILTER
 };
 
 // ------------------------------------
@@ -28,20 +28,20 @@ export const VisibilityFilters = {
 export function addTodo(text) {
   return {
     type: ADD_TODO,
-    payload: text
-  }
+    text
+  };
 }
 export function toggleTodo(index) {
   return {
     type: TOGGLE_TODO,
-    payload: index
-  }
+    index
+  };
 }
 export function setVisibilityFilter(filter) {
   return {
-    type: SET_VISIBILITY_FILTER,
-    payload: filter
-  }
+    type: SET_FILTER,
+    filter
+  };
 }
 
 export const actions = {
@@ -54,21 +54,21 @@ export const actions = {
 // Action Handlers
 // ------------------------------------
 const ACTION_HANDLERS = {
-  [SET_VISIBILITY_FILTER]: (state, action) =>
-    state.set('visibilityFilter', action.payload),
+  [SET_FILTER]: (state, action) =>
+    state.set('filter', action.filter),
 
   [ADD_TODO]: (state, action) =>
-      state.updateIn(['todos'], (todos) => todos.push(Map({text: action.payload, completed: false}))),
+    state.updateIn(['todos'], (todos) => todos.push(Map({id: todos.size + 1, text: action.text, completed: false}))),
 
   [TOGGLE_TODO]: (state, action) =>
-    state.updateIn(['todos', action.payload, 'completed'], (completed) => !completed)
+    state.updateIn(['todos', action.index, 'completed'], (completed) => !completed)
 };
 
 // ------------------------------------
 // Reducer
 // ------------------------------------
 const initialState = Map({
-  visibilityFilter: VisibilityFilters.SHOW_ALL,
+  filter: VisibilityFilters.SHOW_ALL,
   todos: List()
 });
 

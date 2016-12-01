@@ -1,36 +1,37 @@
-import React, {PropTypes} from 'react';
+import React, { PropTypes } from 'react';
 import Todo from './Todo';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
+import ImmutablePropTypes from 'react-immutable-proptypes';
 
-export class TodoList extends React.Component {
-    constructor(props) {
-        super(props);
-        this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
-    }
+export class TodoList extends React.PureComponent {
+  constructor(props) {
+    super(props);
+  }
 
-    render() {
-        return (
-            <ul>
-                {this.props.todos.map(todo => 
-                    <Todo
-                        key={todo.id}
-                        {...todo}
-                        onClick={() => this.props.onTodoClick(todo.id)}
-                    />
-                )}
-            </ul>
-        );
-    }
+  render() {
+    return (
+      <ul>
+        {this.props.todos.map(todo =>
+          <Todo
+            key={todo.get('id')}
+            text={todo.get('text')}
+            completed={todo.get('completed')}
+            onClick={() => this.props.onTodoClick(todo.get('id'))}
+          />
+        )}
+      </ul>
+    );
+  }
 }
 
 TodoList.propTypes = {
-    todos: PropTypes.arrayOf(PropTypes.shape({
-        id: PropTypes.number.isRequired,
-        completed: PropTypes.bool.isRequired,
-        text: PropTypes.string.isRequired
-    }).isRequired).isRequired,
-    onTodoClick: PropTypes.func.isRequired
+  todos: ImmutablePropTypes.listOf(
+    ImmutablePropTypes.mapOf({
+      id: PropTypes.number.isRequired,
+      completed: PropTypes.bool.isRequired,
+      text: PropTypes.string.isRequired
+    })
+  ).isRequired,
+  onTodoClick: PropTypes.func.isRequired
 };
-
 
 export default TodoList;

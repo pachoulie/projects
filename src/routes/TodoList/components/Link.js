@@ -1,34 +1,32 @@
-import React, {PropTypes} from 'react';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
+import React, { PropTypes } from 'react';
 
-export class Link extends React.Component {
-    constructor(props) {
-        super(props);
-        this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
+export class Link extends React.PureComponent {
+  constructor (props) {
+    super(props);
+  }
+
+  render () {
+    if (this.props.active) {
+      return <span>{this.props.children}</span>;
     }
 
-    render() {
-        if (this.props.active) {
-            return <span>{childen}</span>
-        }
-
-        return (
-            <a href="#"
-               onClick={e => {
-                   e.preventDefault();
-                   onClick();
-               }}
+    return (
+      <a href='#'
+        onClick={e => {
+          e.preventDefault();
+          this.props.onClick();
+        }}
             >
-                {children}
-            </a>
-        );
-    }
+        {this.props.children}
+      </a>
+    );
+  }
 }
 
 Link.propTypes = {
-    active: PropTypes.bool.isRequired,
-    children: PropTypes.node.isRequired,
-    onClick: PropTypes.func.isRequired
+  active: PropTypes.bool.isRequired,
+  children: PropTypes.node.isRequired,
+  onClick: PropTypes.func.isRequired
 };
 
 export default Link;
