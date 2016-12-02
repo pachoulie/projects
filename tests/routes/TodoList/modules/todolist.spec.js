@@ -1,6 +1,6 @@
 import { fromJS } from 'immutable';
 import {
-    actionTypes, actions, VisibilityFilters,
+    index, actionTypes, actions, VisibilityFilters,
     default as todoListReducer
 } from 'routes/TodoList/modules/todolist';
 
@@ -8,6 +8,10 @@ describe('(Redux Module) Todo List', () => {
   const initialState = fromJS({
     filter: VisibilityFilters.SHOW_ALL,
     todos: []
+  });
+
+  beforeEach(function() {
+    index = 0;
   });
 
   it('Should export a constant ADD_TODO.', () => {

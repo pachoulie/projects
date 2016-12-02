@@ -25,8 +25,10 @@ export const VisibilityFilters = {
 // ------------------------------------
 // Action creators
 // ------------------------------------
+export let index = 0;
 export function addTodo(text) {
   return {
+    index: ++index,
     type: ADD_TODO,
     text
   };
@@ -58,10 +60,12 @@ const ACTION_HANDLERS = {
     state.set('filter', action.filter),
 
   [ADD_TODO]: (state, action) =>
-    state.updateIn(['todos'], (todos) => todos.push(Map({id: todos.size + 1, text: action.text, completed: false}))),
+    state.updateIn(['todos'], (todos) => todos.push(Map({id: action.index, text: action.text, completed: false}))),
 
-  [TOGGLE_TODO]: (state, action) =>
-    state.updateIn(['todos', action.index, 'completed'], (completed) => !completed)
+  [TOGGLE_TODO]: (state, action) => {
+    const index = state.get('todos').findIndex(todo => todo.index === action.index);
+    return state.updateIn(['todos', index, 'completed'], completed => !completed)
+  }
 };
 
 // ------------------------------------
